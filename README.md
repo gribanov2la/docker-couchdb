@@ -1,6 +1,7 @@
-# CouchDB Dockerfile
+# CouchDB Dockerfile for RaspberryPi 2
 
-A Dockerfile that produces a Docker image for [Apache CouchDB](http://couchdb.apache.org/).
+A Dockerfile that produces a Docker image for [Apache CouchDB](http://couchdb.apache.org/)
+on the ARMv7 architecture.
 
 It is based on the [Ferran Rodenas's version](https://github.com/frodenas/docker-couchdb)
 but includes the following changes and improvements:

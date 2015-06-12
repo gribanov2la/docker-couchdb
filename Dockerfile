@@ -1,8 +1,9 @@
-FROM debian:wheezy
+FROM resin/rpi-raspbian:wheezy
 
 MAINTAINER Krzysztof Kobrzak <chris.kobrzak@gmail.com>
 
 ENV COUCHDB_VERSION 1.6.1
+ENV ERLANG_DOWNLOAD_VERSION 15.b.3-1
 
 COPY scripts /usr/local/bin
 
@@ -26,14 +27,16 @@ RUN \
     libmozjs185-dev \
     netcat \
     pwgen && \
-  curl -o esl.deb -sSL https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && \
+  curl -o esl.deb -sSL \
+    http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_3_general/esl-erlang_$ERLANG_DOWNLOAD_VERSION~raspbian~wheezy_armhf.deb && \
   dpkg -i esl.deb && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    erlang-nox=1:17.5.3 \
-    erlang-dev=1:17.5.3 && \
+    erlang-nox \
+    erlang-dev && \
   cd /usr/src && \
-  curl -s -o apache-couchdb.tar.gz http://mirror.ox.ac.uk/sites/rsync.apache.org/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz && \
+  curl -s -o apache-couchdb.tar.gz \
+    http://mirror.ox.ac.uk/sites/rsync.apache.org/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz && \
   tar -xzf apache-couchdb.tar.gz && \
   cd /usr/src/apache-couchdb-$COUCHDB_VERSION && \
   ./configure --with-js-lib=/usr/lib --with-js-include=/usr/include/mozjs && \
