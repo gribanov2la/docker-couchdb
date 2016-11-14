@@ -20,18 +20,14 @@ RUN \
     build-essential \
     ca-certificates \
     curl \
+    erlang-dev \
+    erlang-nox \
     libcurl4-openssl-dev \
     libicu-dev \
     libmozjs185-1.0 \
     libmozjs185-dev \
     netcat \
     pwgen && \
-  curl -o esl.deb -sSL https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && \
-  dpkg -i esl.deb && \
-  apt-get update && \
-  apt-get install -y --no-install-recommends \
-    erlang-nox=1:17.5.3 \
-    erlang-dev=1:17.5.3 && \
   cd /usr/src && \
   curl -s -o apache-couchdb.tar.gz http://mirror.ox.ac.uk/sites/rsync.apache.org/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz && \
   tar -xzf apache-couchdb.tar.gz && \
@@ -49,8 +45,7 @@ RUN \
     perl && \
   apt-get autoremove -y && \
   apt-get clean && \
-  rm -rf /esl.deb \
-    /usr/src/apache* \
+  rm -rf /usr/src/apache* \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
